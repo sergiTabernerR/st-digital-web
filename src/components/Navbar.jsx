@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Lenguajes from './Lenguajes/Lenguajes';
 
 const Navbar = ({ setView }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,71 +58,53 @@ const Navbar = ({ setView }) => {
   };
 
   return (
-    <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-md text-white border-b border-gray-800">
-      {/* CENTRADOR: 
-          Agregamos este div que limita el ancho a 1280px (max-w-7xl) y lo centra (mx-auto).
-          Mantenemos py-4 y px-6 como tenías originalmente.
-      */}
+    <nav className="fixed w-full z-[100] bg-black/95 backdrop-blur-lg text-white border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         
+        {/* LOGO */}
         <div 
-          className="text-2xl font-bold tracking-tighter cursor-pointer"
+          className="text-2xl font-black tracking-tighter cursor-pointer"
           onClick={() => handleLinkClick('home')}
         >
-          ST<span className="text-gray-400">Digital</span>
+          ST<span className="text-blue-500">DIGITAL</span>
         </div>
 
         {/* --- DESKTOP --- */}
-        <div className="hidden md:flex space-x-8 text-sm font-semibold uppercase">
+        <div className="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest">
           {navLinks.map((link) => (
             <div key={link.name} className="relative group">
-            <button 
-        onClick={() => link.view && handleLinkClick(link.view)}
-        className="hover:text-set-blue transition flex items-center gap-1 py-2"
-      >
-        {link.name} {link.submenu && <span className="text-[8px]">▼</span>}
-      </button>
+              <button 
+                onClick={() => link.view && handleLinkClick(link.view)}
+                className="hover:text-blue-500 transition-colors flex items-center gap-1 py-2"
+              >
+                {link.name} {link.submenu && <span className="text-[8px] opacity-50">▼</span>}
+              </button>
 
               {link.submenu && (
-                /* Ajustamos mt-2 para que el menú no esté tan pegado al botón */
-                <div className="absolute left-0 mt-2 w-64 bg-set-dark border border-gray-800 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="absolute left-0 mt-2 w-64 bg-zinc-950 border border-gray-800 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                   {link.submenu.map((sub, idx) => (
-                    <div key={idx} className="relative group/item border-b border-gray-800/50 last:border-0">
-                      
-                      <div className="flex justify-between items-center hover:bg-gray-900 transition-colors">
-                        {sub.view ? (
-                          <button 
-                            onClick={() => handleLinkClick(sub.view)}
-                            className="flex-1 text-left px-4 py-3 text-xs hover:text-set-blue font-bold uppercase"
-                          >
-                            {sub.name}
-                          </button>
-                        ) : (
-                          <span className="flex-1 px-4 py-3 text-xs cursor-default italic text-gray-400">
-                            {sub.name}
-                          </span>
-                        )}
-                        {sub.submenu && <span className="pr-4 text-[10px] text-gray-500">▶</span>}
+                    <div key={idx} className="relative group/item border-b border-gray-900 last:border-0">
+                      <div className="flex justify-between items-center hover:bg-zinc-900">
+                        <button 
+                          onClick={() => sub.view && handleLinkClick(sub.view)}
+                          className="flex-1 text-left px-5 py-4 text-[10px] hover:text-blue-400 font-bold uppercase"
+                        >
+                          {sub.name}
+                        </button>
+                        {sub.submenu && <span className="pr-4 text-[8px] text-gray-600">▶</span>}
                       </div>
 
-                      {/* NIVEL 3 */}
+                      {/* NIVEL 3 DESKTOP */}
                       {sub.submenu && (
-                        <div className="absolute left-full top-0 w-48 bg-set-dark border border-gray-800 shadow-xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all">
+                        <div className="absolute left-full top-0 w-56 bg-zinc-950 border border-gray-800 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all duration-200">
                           {sub.submenu.map((deepItem, dIdx) => (
-                            <div key={dIdx} className="hover:bg-gray-900 border-b border-gray-800/50 last:border-0">
-                              {typeof deepItem === 'object' && deepItem.view ? (
-                                <button 
-                                  onClick={() => handleLinkClick(deepItem.view)}
-                                  className="w-full text-left px-4 py-3 text-xs hover:text-set-blue font-bold"
-                                >
-                                  {deepItem.name}
-                                </button>
-                              ) : (
-                                <div className="px-4 py-3 text-xs text-gray-400">
-                                  {typeof deepItem === 'string' ? deepItem : deepItem.name}
-                                </div>
-                              )}
-                            </div>
+                            <button 
+                              key={dIdx}
+                              onClick={() => deepItem.view && handleLinkClick(deepItem.view)}
+                              className="w-full text-left px-5 py-4 text-[10px] hover:bg-zinc-900 hover:text-blue-400 border-b border-gray-900 last:border-0 font-bold uppercase"
+                            >
+                              {deepItem.name}
+                            </button>
                           ))}
                         </div>
                       )}
@@ -135,73 +116,81 @@ const Navbar = ({ setView }) => {
           ))}
         </div>
 
-        {/* --- MÓVIL --- */}
-        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>{isOpen ? '✕' : '☰'}</button>
+        {/* BOTÓN HAMBURGUESA */}
+        <button 
+          className="md:hidden p-2 text-2xl focus:outline-none" 
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? '✕' : '☰'}
+        </button>
       </div>
 
-      {/* --- MENÚ MÓVIL (Fuera del contenedor para que ocupe todo el ancho) --- */}
+      {/* --- MENÚ MÓVIL RESTRUCTURADO --- */}
       {isOpen && (
-        <div className="absolute top-[100%] left-0 w-full bg-black flex flex-col p-6 space-y-4 md:hidden border-b border-gray-800 h-screen overflow-y-auto">
-          {navLinks.map((link) => (
-            <div key={link.name} className="flex flex-col">
-              <button 
-                onClick={() => toggleMobileMenu(link.name)}
-                className="flex justify-between items-center text-lg font-bold uppercase"
-              >
-                {link.name} {link.submenu && <span>{activeMobileMenus.includes(link.name) ? '-' : '+'}</span>}
-              </button>
-              
-              {link.submenu && activeMobileMenus.includes(link.name) && (
-                <div className="flex flex-col ml-4 mt-2 space-y-3 border-l border-gray-700 pl-4">
-                  {link.submenu.map((sub, idx) => (
-                    <div key={idx}>
-                      <div className="flex justify-between items-center">
-                        {sub.view ? (
-                       <button 
-  onClick={() => {
-    if (link.view) {
-      handleLinkClick(link.view); // Si tiene vista (Contacto), navega
-    } else {
-      toggleMobileMenu(link.name); // Si no tiene (Desarrollo), abre el submenú
-    }
-  }}
-  className="flex justify-between items-center text-lg font-bold uppercase"
->
-  {link.name} {link.submenu && <span>{activeMobileMenus.includes(link.name) ? '-' : '+'}</span>}
-</button>
-                        ) : (
-                          <span className="text-gray-400 uppercase text-sm py-1">{sub.name}</span>
-                        )}
-                        {sub.submenu && (
-                          <button onClick={() => toggleMobileMenu(sub.name)} className="p-2 text-gray-500">
-                            {activeMobileMenus.includes(sub.name) ? '▾' : '▸'}
+        <div className="fixed inset-0 top-[64px] w-full bg-black z-50 overflow-y-auto pb-20 animate-in slide-in-from-right duration-300 md:hidden">
+          <div className="flex flex-col p-6 space-y-2">
+            {navLinks.map((link) => (
+              <div key={link.name} className="border-b border-gray-900 py-2">
+                <div className="flex justify-between items-center">
+                  <button 
+                    onClick={() => link.view ? handleLinkClick(link.view) : toggleMobileMenu(link.name)}
+                    className="text-xl font-black uppercase tracking-tighter py-3 text-left flex-1"
+                  >
+                    {link.name}
+                  </button>
+                  {link.submenu && (
+                    <button 
+                      onClick={() => toggleMobileMenu(link.name)}
+                      className="p-4 text-blue-500 text-xl"
+                    >
+                      {activeMobileMenus.includes(link.name) ? '−' : '+'}
+                    </button>
+                  )}
+                </div>
+                
+                {/* SUBMENÚ NIVEL 1 MÓVIL */}
+                {link.submenu && activeMobileMenus.includes(link.name) && (
+                  <div className="ml-4 flex flex-col space-y-1 bg-zinc-950/50 rounded-xl px-4 py-2 mb-4 border-l-2 border-blue-600">
+                    {link.submenu.map((sub, idx) => (
+                      <div key={idx} className="flex flex-col">
+                        <div className="flex justify-between items-center py-3">
+                          <button 
+                            onClick={() => sub.view && handleLinkClick(sub.view)}
+                            className="text-sm font-bold uppercase text-gray-300 text-left flex-1"
+                          >
+                            {sub.name}
                           </button>
+                          {sub.submenu && (
+                            <button 
+                              onClick={() => toggleMobileMenu(sub.name)}
+                              className="px-4 py-2 text-gray-500"
+                            >
+                              {activeMobileMenus.includes(sub.name) ? '▲' : '▼'}
+                            </button>
+                          )}
+                        </div>
+
+                        {/* SUBMENÚ NIVEL 2 MÓVIL (Deep) */}
+                        {sub.submenu && activeMobileMenus.includes(sub.name) && (
+                          <div className="ml-4 grid grid-cols-1 gap-2 pb-4">
+                            {sub.submenu.map((deep, dIdx) => (
+                              <button 
+                                key={dIdx}
+                                onClick={() => deep.view && handleLinkClick(deep.view)}
+                                className="text-xs uppercase font-bold text-blue-400 bg-blue-500/5 py-3 px-4 rounded-lg text-left"
+                              >
+                                {deep.name}
+                              </button>
+                            ))}
+                          </div>
                         )}
                       </div>
-
-                      {sub.submenu && activeMobileMenus.includes(sub.name) && (
-                        <div className="flex flex-col ml-4 mt-1 space-y-2 border-l border-gray-800 pl-4 pb-2">
-                          {sub.submenu.map((deep, dIdx) => (
-                            <div key={dIdx}>
-                              {typeof deep === 'object' && deep.view ? (
-                                <button onClick={() => handleLinkClick(deep.view)} className="text-gray-500 text-xs uppercase hover:text-set-blue text-left py-1">
-                                  {deep.name}
-                                </button>
-                              ) : (
-                                <div className="text-gray-600 text-xs uppercase py-1">
-                                  {typeof deep === 'string' ? deep : deep.name}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </nav>

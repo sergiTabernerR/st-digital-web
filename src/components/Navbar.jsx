@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//Navbar
+
 const Navbar = ({ setView }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMobileMenus, setActiveMobileMenus] = useState([]);
@@ -46,19 +46,20 @@ const Navbar = ({ setView }) => {
   const handleLinkClick = (viewName) => {
     if (viewName) {
       setView(viewName);
-      setIsOpen(false);
+      setIsOpen(false); // Cierra el menú al navegar
       window.scrollTo(0, 0);
     }
   };
 
-  const toggleMobileMenu = (menuName) => {
+  const toggleMobileMenu = (e, menuName) => {
+    e.stopPropagation(); // Evita que el clic se propague a otros elementos
     setActiveMobileMenus(prev => 
       prev.includes(menuName) ? prev.filter(item => item !== menuName) : [...prev, menuName]
     );
   };
 
   return (
-    <nav className="fixed w-full z-[100] bg-black/95 backdrop-blur-lg text-white border-b border-gray-800">
+    <nav className="fixed w-full z-[100] bg-black text-white border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         
         {/* LOGO */}
@@ -94,7 +95,6 @@ const Navbar = ({ setView }) => {
                         {sub.submenu && <span className="pr-4 text-[8px] text-gray-600">▶</span>}
                       </div>
 
-                      {/* NIVEL 3 DESKTOP */}
                       {sub.submenu && (
                         <div className="absolute left-full top-0 w-56 bg-zinc-950 border border-gray-800 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transition-all duration-200">
                           {sub.submenu.map((deepItem, dIdx) => (
@@ -116,68 +116,60 @@ const Navbar = ({ setView }) => {
           ))}
         </div>
 
-        {/* BOTÓN HAMBURGUESA */}
+        {/* BOTÓN HAMBURGUESA MÓVIL */}
         <button 
-          className="md:hidden p-2 text-2xl focus:outline-none" 
+          className="md:hidden p-2 text-2xl" 
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? '✕' : '☰'}
         </button>
       </div>
 
-      {/* --- MENÚ MÓVIL RESTRUCTURADO --- */}
+      {/* --- MENÚ MÓVIL REPARADO --- */}
       {isOpen && (
-        <div className="fixed inset-0 top-[64px] w-full bg-black z-50 overflow-y-auto pb-20 animate-in slide-in-from-right duration-300 md:hidden">
-          <div className="flex flex-col p-6 space-y-2">
+        <div className="fixed inset-0 top-[64px] w-full bg-black z-[110] overflow-y-auto pb-32 md:hidden">
+          <div className="flex flex-col p-6">
             {navLinks.map((link) => (
-              <div key={link.name} className="border-b border-gray-900 py-2">
-                <div className="flex justify-between items-center">
-                  <button 
-                    onClick={() => link.view ? handleLinkClick(link.view) : toggleMobileMenu(link.name)}
-                    className="text-xl font-black uppercase tracking-tighter py-3 text-left flex-1"
-                  >
+              <div key={link.name} className="border-b border-gray-900">
+                <div 
+                  className="flex justify-between items-center py-4 cursor-pointer"
+                  onClick={(e) => link.submenu ? toggleMobileMenu(e, link.name) : handleLinkClick(link.view)}
+                >
+                  <span className="text-xl font-black uppercase tracking-tighter">
                     {link.name}
-                  </button>
+                  </span>
                   {link.submenu && (
-                    <button 
-                      onClick={() => toggleMobileMenu(link.name)}
-                      className="p-4 text-blue-500 text-xl"
-                    >
+                    <span className="text-blue-500 text-2xl pr-2">
                       {activeMobileMenus.includes(link.name) ? '−' : '+'}
-                    </button>
+                    </span>
                   )}
                 </div>
                 
-                {/* SUBMENÚ NIVEL 1 MÓVIL */}
+                {/* SUBMENÚ NIVEL 1 */}
                 {link.submenu && activeMobileMenus.includes(link.name) && (
-                  <div className="ml-4 flex flex-col space-y-1 bg-zinc-950/50 rounded-xl px-4 py-2 mb-4 border-l-2 border-blue-600">
+                  <div className="pl-4 pb-4 space-y-2">
                     {link.submenu.map((sub, idx) => (
                       <div key={idx} className="flex flex-col">
-                        <div className="flex justify-between items-center py-3">
-                          <button 
-                            onClick={() => sub.view && handleLinkClick(sub.view)}
-                            className="text-sm font-bold uppercase text-gray-300 text-left flex-1"
-                          >
-                            {sub.name}
-                          </button>
+                        <div 
+                          className="flex justify-between items-center py-3 text-gray-300"
+                          onClick={(e) => sub.submenu ? toggleMobileMenu(e, sub.name) : handleLinkClick(sub.view)}
+                        >
+                          <span className="text-sm font-bold uppercase">{sub.name}</span>
                           {sub.submenu && (
-                            <button 
-                              onClick={() => toggleMobileMenu(sub.name)}
-                              className="px-4 py-2 text-gray-500"
-                            >
+                            <span className="text-gray-500 px-4">
                               {activeMobileMenus.includes(sub.name) ? '▲' : '▼'}
-                            </button>
+                            </span>
                           )}
                         </div>
 
-                        {/* SUBMENÚ NIVEL 2 MÓVIL (Deep) */}
+                        {/* SUBMENÚ NIVEL 2 (Final Links) */}
                         {sub.submenu && activeMobileMenus.includes(sub.name) && (
-                          <div className="ml-4 grid grid-cols-1 gap-2 pb-4">
+                          <div className="pl-4 mt-2 flex flex-col gap-2 border-l border-gray-800">
                             {sub.submenu.map((deep, dIdx) => (
                               <button 
                                 key={dIdx}
-                                onClick={() => deep.view && handleLinkClick(deep.view)}
-                                className="text-xs uppercase font-bold text-blue-400 bg-blue-500/5 py-3 px-4 rounded-lg text-left"
+                                onClick={() => handleLinkClick(deep.view)}
+                                className="text-xs uppercase font-bold text-blue-400 bg-blue-500/5 py-4 px-4 rounded-lg text-left active:bg-blue-500/20"
                               >
                                 {deep.name}
                               </button>
@@ -196,5 +188,6 @@ const Navbar = ({ setView }) => {
     </nav>
   );
 };
+
 
 export default Navbar;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+//Navbar
 const Navbar = ({ setView }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMobileMenus, setActiveMobileMenus] = useState([]);

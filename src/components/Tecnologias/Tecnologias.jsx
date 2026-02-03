@@ -1,5 +1,5 @@
 import React from 'react';
-//Teconologias
+
 const Tecnologias = ({ setView }) => {
 
   const scrollToContact = () => {

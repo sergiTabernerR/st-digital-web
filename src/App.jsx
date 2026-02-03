@@ -71,91 +71,91 @@ function App() {
       {view === 'home' && (
         <>
           <HeroHome />
-          <MiddleHome />
-        </>
+         <MiddleHome setView={setView} />   
+           </>
       )}
 
       {view === 'soluciones' && (
         <>
-          <HeroSoluciones />
-          <MiddleSoluciones />
-          <SolutionsGrid />
+          <HeroSoluciones setView={setView} /> 
+          <MiddleSoluciones setView={setView} /> 
+          <SolutionsGrid setView={setView} /> 
         </>
       )}
 
       {view === 'mvp' && (
-        <MVPPage />
+        <MVPPage setView={setView} /> 
       )}
 
      {view === 'InteligenciaArtificial' && (
-        <InteligenciaArtificial />
+        <InteligenciaArtificial setView={setView} /> 
       )}
         {view === 'Contacto' && (
-        <Contacto />
+        <Contacto setView={setView} /> 
       )}
        {view === 'ArtquitecturaSoluciones' && (
-        <ArquitecturaSoluciones />
+        <ArquitecturaSoluciones setView={setView} /> 
 
 )}
      {view === 'Microservicios' && (
-        <Microservicios />
+        <Microservicios setView={setView} /> 
         )}
 
     {view === 'Lenguajes' && (
-        <Lengaujes />
+        <Lengaujes setView={setView} /> 
         )}
           {view === 'Dotnet' && (
-        <Dotnet />
+        <Dotnet setView={setView} /> 
         )}
      {view === 'NodeJS' && (
-        <NodeJS />
+        <NodeJS setView={setView} /> 
         )}
         
             {view === 'Python' && (
-        <Python />
+        <Python setView={setView} /> 
         )}
       {view === 'Flutter' && (
-        <Flutter />
+        <Flutter setView={setView} /> 
         )}
       {view === 'Tecnologias' && (
-        <Tecnologias />
+        <Tecnologias setView={setView} /> 
         )}
  {view === 'WebSocket' && (
-        <WebSocket />
+        <WebSocket setView={setView} /> 
         )}
        {view === 'Mqtt' && (
-        <Mqtt />
+        <Mqtt setView={setView} /> 
         )}
           
 
       {view === 'Kafka' && (
-        <Kafka />
+        <Kafka setView={setView} /> 
         )}
 
               {view === 'Devops' && (
-        <Devops />
+        <Devops setView={setView} /> 
         )}
          {view === 'CiCd' && (
-        <CiCd />
+        <CiCd setView={setView} /> 
         )}
      {view === 'Cloud' && (
-        <Cloud />
+        <Cloud setView={setView} /> 
         )}
 
    {view === 'Azure' && (
         <Azure />
         )}
    {view === 'GoogleCloud' && (
-        <GoogleCloud />
+        <GoogleCloud setView={setView} /> 
         )}
   {view === 'Kubernetes' && (
-        <Kubernetes />
+        <Kubernetes setView={setView} /> 
         )}
   {view === 'Outsourcing' && (
-        <Outsourcing />
+        <Outsourcing setView={setView} /> 
         )}
           {view === 'Desarrollo' && (
-        <Desarrollo />
+        <Desarrollo setView={setView} />   
         )}
         
       <ContactForm />

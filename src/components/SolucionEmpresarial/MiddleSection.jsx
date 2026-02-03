@@ -1,6 +1,7 @@
 import React from 'react';
 
-const MiddleSection = () => {
+// EL CAMBIO CLAVE: Añadir { setView } aquí abajo
+const MiddleSection = ({ setView }) => {
   const logos = [
     { name: ".NET", url: "https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg" },
     { name: "JS", url: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" },
@@ -18,12 +19,23 @@ const MiddleSection = () => {
           <div className="flex flex-col items-center text-center p-8 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition">
             <img src="https://cdn-icons-png.flaticon.com/512/2463/2463510.png" className="h-40 mb-6" alt="Software Cycle" />
             <h3 className="text-2xl font-bold mb-4">El desarrollo es nuestra pasión</h3>
-            <button className="bg-set-blue text-white px-4 py-1 text-xs font-bold rounded">LEER MÁS</button>
+            <button 
+              onClick={() => { setView('Desarrollo'); window.scrollTo(0,0); }}
+              className="bg-blue-600 text-white px-6 py-2 text-xs font-bold rounded uppercase tracking-widest hover:bg-blue-700 transition"
+            >
+              LEER MÁS
+            </button>
           </div>
+          
           <div className="flex flex-col items-center text-center p-8 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition">
             <img src="https://cdn-icons-png.flaticon.com/512/5261/5261831.png" className="h-40 mb-6" alt="DevOps Cycle" />
             <h3 className="text-2xl font-bold mb-4">Cultura DevOps e Integración</h3>
-            <button className="bg-set-blue text-white px-4 py-1 text-xs font-bold rounded">LEER MÁS</button>
+            <button 
+              onClick={() => { setView('Devops'); window.scrollTo(0,0); }}
+              className="bg-blue-600 text-white px-6 py-2 text-xs font-bold rounded uppercase tracking-widest hover:bg-blue-700 transition"
+            >
+              LEER MÁS
+            </button>
           </div>
         </div>
 
@@ -38,9 +50,14 @@ const MiddleSection = () => {
         </div>
 
         {/* Banner Azul de Contacto */}
-        <div className="bg-set-blue rounded-lg p-10 flex flex-col md:flex-row items-center justify-between text-white shadow-2xl">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-0">¿Quieres más información? ¡Ponte en contacto con nosotros!</h2>
-          <button className="bg-white text-set-blue px-8 py-3 font-black rounded-sm hover:bg-gray-100 transition shadow-lg">ME INTERESA</button>
+        <div className="bg-blue-600 rounded-lg p-10 flex flex-col md:flex-row items-center justify-between text-white shadow-2xl">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-0">¿Quieres más información?</h2>
+          <button 
+            onClick={() => { setView('Contacto'); window.scrollTo(0,0); }}
+            className="bg-white text-blue-600 px-8 py-3 font-black rounded-sm hover:bg-gray-100 transition shadow-lg uppercase text-sm tracking-widest"
+          >
+            ME INTERESA
+          </button>
         </div>
       </div>
     </section>

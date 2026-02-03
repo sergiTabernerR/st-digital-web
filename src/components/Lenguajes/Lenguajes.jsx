@@ -1,18 +1,24 @@
 import React from 'react';
 
-const Lenguajes = () => {
+// 1. Añadimos { setView } como prop
+const Lenguajes = ({ setView }) => {
 
-  // Función para scroll suave al formulario de contacto
+  // Función para scroll suave al formulario de contacto o navegar a la vista Contacto
   const scrollToContact = () => {
     const form = document.getElementById('formulario-contacto');
     if (form) {
       form.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      setView('Contacto');
+      window.scrollTo(0, 0);
     }
   };
 
+  // 2. Añadimos el campo 'id' a cada objeto para que coincida con App.js
   const techStack = [
     {
       name: ".NET",
+      id: "Dotnet", // Coincide con view === 'Dotnet' en App.js
       color: "text-purple-500",
       bgHover: "group-hover:bg-purple-900/20",
       borderHover: "group-hover:border-purple-500",
@@ -20,13 +26,13 @@ const Lenguajes = () => {
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12">
            <path d="M2,12A10,10 0 1,1 12,22A10,10 0 0,1 2,12M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" /> 
-           {/* Icono simplificado representativo */}
            <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fontSize="8px" fontWeight="bold" fill="currentColor">.NET</text>
         </svg>
       )
     },
     {
       name: "NodeJS",
+      id: "NodeJS", // Coincide con view === 'NodeJS' en App.js
       color: "text-green-500",
       bgHover: "group-hover:bg-green-900/20",
       borderHover: "group-hover:border-green-500",
@@ -39,6 +45,7 @@ const Lenguajes = () => {
     },
     {
       name: "Python",
+      id: "Python", // Coincide con view === 'Python' en App.js
       color: "text-yellow-400",
       bgHover: "group-hover:bg-yellow-900/20",
       borderHover: "group-hover:border-yellow-500",
@@ -51,6 +58,7 @@ const Lenguajes = () => {
     },
     {
       name: "Flutter",
+      id: "Flutter", // Coincide con view === 'Flutter' en App.js
       color: "text-blue-400",
       bgHover: "group-hover:bg-blue-900/20",
       borderHover: "group-hover:border-blue-500",
@@ -79,55 +87,46 @@ const Lenguajes = () => {
             LENGUAJES
           </h1>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light">
-            Dominamos múltiples lenguajes de programación para cubrir cualquier necesidad tecnológica de nuestros clientes.
+            Dominamos múltiples lenguajes de programación para cubrir cualquier necesidad tecnológica.
           </p>
         </div>
       </div>
 
-      {/* 2. INTRODUCCIÓN & ICONOS SIMPLES */}
+      {/* 2. ICONOS (Navegación rápida) */}
       <div className="container mx-auto px-6 py-20 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          Somos expertos en los lenguajes de programación <br/>
-          <span className="text-blue-500">más potentes del mundo</span>
+          Expertos en los lenguajes <span className="text-blue-500">más potentes</span>
         </h2>
-        <p className="text-gray-400 mb-12">
-            Utilizamos todos estos lenguajes de programación...
-        </p>
-
-        {/* Fila de Iconos (Visualización rápida) */}
-        <div className="flex flex-wrap justify-center items-center gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+        <div className="flex flex-wrap justify-center items-center gap-12 mt-12">
            {techStack.map((tech, index) => (
-               <div key={index} className={`w-16 h-16 ${tech.color} hover:scale-110 transition transform`}>
+               <div 
+                key={index} 
+                className={`w-16 h-16 ${tech.color} cursor-pointer hover:scale-125 transition transform`}
+                onClick={() => { setView(tech.id); window.scrollTo(0, 0); }}
+               >
                    {tech.icon}
                </div>
            ))}
         </div>
       </div>
 
-      {/* 3. CTA BANNER (Igual que en la imagen) */}
+      {/* 3. CTA BANNER */}
       <div className="w-full bg-blue-500 py-16 text-center relative overflow-hidden">
-         {/* Fondo sutil decorativo */}
-         <div className="absolute inset-0 bg-blue-600 opacity-50 skew-y-3 transform scale-110"></div>
-         
          <div className="relative z-10 container mx-auto px-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 shadow-black drop-shadow-md">
-                ¿Quieres más información? ¡Ponte en contacto con nosotros!
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                ¿Quieres más información?
             </h2>
             <button 
                 onClick={scrollToContact}
-                className="bg-white text-blue-600 font-bold py-3 px-8 rounded shadow-lg hover:bg-gray-100 transition transform hover:-translate-y-1 uppercase tracking-widest text-sm"
+                className="bg-white text-blue-600 font-black py-3 px-8 rounded hover:bg-gray-100 transition uppercase tracking-widest text-sm"
             >
                 Me interesa
             </button>
          </div>
       </div>
 
-      {/* 4. GRID DETALLADO (Especializados en...) */}
+      {/* 4. GRID DETALLADO (Botones Leer más corregidos) */}
       <div className="container mx-auto px-6 py-24">
-         <h3 className="text-center text-gray-500 text-sm font-bold uppercase tracking-widest mb-16">
-            Estamos especializados en...
-         </h3>
-
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {techStack.map((tech, index) => (
                 <div 
@@ -137,26 +136,22 @@ const Lenguajes = () => {
                     <div className={`mb-6 p-4 rounded-full bg-gray-800 transition duration-300 ${tech.bgHover} ${tech.color}`}>
                         {tech.icon}
                     </div>
-                    
-                    <h4 className="text-xl font-bold mb-4 text-white uppercase tracking-wide">
-                        {tech.name}
-                    </h4>
-                    
-                    <p className="text-gray-400 text-sm leading-relaxed">
-                        {tech.description}
-                    </p>
+                    <h4 className="text-xl font-bold mb-4 text-white uppercase">{tech.name}</h4>
+                    <p className="text-gray-400 text-sm flex-grow">{tech.description}</p>
                     
                     <div className="mt-6 pt-6 border-t border-gray-800 w-full">
-                        <span className={`text-xs font-bold cursor-pointer hover:underline ${tech.color}`}>
+                        {/* 3. El botón ahora usa setView(tech.id) */}
+                        <button 
+                          onClick={() => { setView(tech.id); window.scrollTo(0, 0); }}
+                          className={`text-xs font-black uppercase tracking-widest cursor-pointer hover:underline ${tech.color}`}
+                        >
                             Leer más &rarr;
-                        </span>
+                        </button>
                     </div>
                 </div>
             ))}
          </div>
       </div>
-
-
     </div>
   );
 };

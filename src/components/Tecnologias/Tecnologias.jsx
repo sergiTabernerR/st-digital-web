@@ -1,17 +1,21 @@
 import React from 'react';
 
-const Tecnologias = () => {
+const Tecnologias = ({ setView }) => {
 
   const scrollToContact = () => {
     const form = document.getElementById('formulario-contacto');
     if (form) {
       form.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      setView('Contacto');
+      window.scrollTo(0, 0);
     }
   };
 
   const specializations = [
     {
       title: "WEBSOCKETS",
+      id: "WebSocket", // Coincide con App.js
       icon: (
         <div className="w-20 h-20 rounded-full border-4 border-green-600 flex items-center justify-center mb-6">
           <svg className="w-10 h-10 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -23,6 +27,7 @@ const Tecnologias = () => {
     },
     {
       title: "MQTT",
+      id: "Mqtt", // Coincide con App.js
       icon: (
         <div className="w-20 h-20 rounded-full border-4 border-purple-800 flex items-center justify-center mb-6">
           <svg className="w-10 h-10 text-purple-800" viewBox="0 0 24 24" fill="currentColor">
@@ -30,10 +35,11 @@ const Tecnologias = () => {
           </svg>
         </div>
       ),
-      description: "Utilizamos este protocolo de mensajería ligero basado en el modelo publicador/suscriptor sobre Websockets en nuestros desarrollos de software a medida para crear aplicaciones con transmisión de datos en tiempo real."
+      description: "Utilizamos este protocolo de mensajería ligero basado en el modelo publicador/suscriptor sobre Websockets en nuestros desarrollos de software a medida."
     },
     {
       title: "KAFKA",
+      id: "Kafka", // Coincide con App.js
       icon: (
         <div className="w-20 h-20 rounded-full border-4 border-stone-800 flex items-center justify-center mb-6">
           <svg className="w-10 h-10 text-stone-800" viewBox="0 0 24 24" fill="currentColor">
@@ -42,14 +48,14 @@ const Tecnologias = () => {
           </svg>
         </div>
       ),
-      description: "Utilizamos esta plataforma de streaming de mensajería junto con Microservicios basados en nuestro Framework para cumplir las necesidades técnicas de nuestros clientes."
+      description: "Utilizamos esta plataforma de streaming de mensajería junto con Microservicios basados en nuestro Framework para cumplir las necesidades técnicas."
     }
   ];
 
   return (
     <div className="bg-white text-black min-h-screen font-sans pt-20">
       
-      {/* 1. HERO SECTION (image_06b178.png) */}
+      {/* 1. HERO SECTION */}
       <div className="relative h-[400px] flex items-center overflow-hidden bg-gray-900">
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center opacity-40"
@@ -68,28 +74,19 @@ const Tecnologias = () => {
       {/* 2. INTRO SECTION */}
       <div className="container mx-auto px-6 py-20 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 uppercase tracking-tight">
-            Somos expertos en múltiples tecnologías Open Source ampliamente adaptadas
+            Somos expertos en múltiples tecnologías Open Source
         </h2>
-        <p className="text-gray-500 max-w-3xl mx-auto mb-12 italic">
-            Proponemos soluciones tecnológicas a la medida de los proyectos de nuestros clientes: Porque la tecnología es el medio y no el fin.
-        </p>
-
+        
         <div className="mb-16">
             <h3 className="text-sm font-bold uppercase tracking-[0.3em] mb-10 text-gray-400">Utilizamos todas éstas tecnologías...</h3>
             <div className="flex justify-center items-center gap-12 grayscale opacity-60">
-                {/* Iconos de Kafka, Websockets y MQTT en fila */}
-                <span className="text-4xl font-bold">KAFKA</span>
-                <span className="text-4xl font-bold">WS</span>
-                <span className="text-4xl font-bold">MQTT</span>
+                <button onClick={() => { setView('Kafka'); window.scrollTo(0,0); }} className="hover:text-blue-600 transition-colors text-4xl font-bold">KAFKA</button>
+                <button onClick={() => { setView('WebSocket'); window.scrollTo(0,0); }} className="hover:text-blue-600 transition-colors text-4xl font-bold">WS</button>
+                <button onClick={() => { setView('Mqtt'); window.scrollTo(0,0); }} className="hover:text-blue-600 transition-colors text-4xl font-bold">MQTT</button>
             </div>
         </div>
 
-        <p className="text-gray-500 max-w-4xl mx-auto text-sm leading-relaxed mb-12">
-            Junto a desarrollos de software a medida para conseguir aplicaciones que se adapten a las necesidades de negocio, con total claridad y sin pasarnos con tecnicismos incomprensibles. Utilizamos su lenguaje. <br/>
-            <strong>Así todo es más fácil. ¿Te ayudamos?</strong>
-        </p>
-
-        {/* 3. CTA AZUL (image_06b178.png) */}
+        {/* 3. CTA AZUL */}
         <div className="bg-cyan-500 p-8 md:p-12 rounded-lg max-w-4xl mx-auto shadow-xl mb-24 relative overflow-hidden group">
             <div className="relative z-10">
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 uppercase tracking-tighter">
@@ -105,7 +102,7 @@ const Tecnologias = () => {
         </div>
       </div>
 
-      {/* 4. ESPECIALIZACIONES (image_06b178.png parte inferior) */}
+      {/* 4. ESPECIALIZACIONES (Botones corregidos) */}
       <div className="bg-gray-50 py-24 border-t border-gray-100">
         <div className="container mx-auto px-6">
           <h3 className="text-center text-gray-800 text-2xl font-bold mb-20 uppercase tracking-widest">Estamos especializados en...</h3>
@@ -115,11 +112,15 @@ const Tecnologias = () => {
               <div key={index} className="flex flex-col items-center text-center">
                 {spec.icon}
                 <h4 className="text-sm font-black text-gray-800 mb-4 tracking-widest">{spec.title}</h4>
-                <p className="text-gray-500 text-xs leading-relaxed max-w-xs">
+                <p className="text-gray-500 text-xs leading-relaxed max-w-xs flex-grow">
                   {spec.description}
                 </p>
-                <button className="mt-6 text-[10px] font-bold text-blue-500 hover:text-blue-700 uppercase tracking-widest flex items-center gap-1">
-                  Leer más <span className="text-xs">›</span>
+                {/* AQUI EL CAMBIO: Ahora spec.id tiene valor */}
+                <button 
+                 onClick={() => { setView(spec.id); window.scrollTo(0, 0); }}
+                 className="mt-6 text-[10px] font-bold text-blue-500 hover:text-blue-700 uppercase tracking-widest flex items-center gap-1 group"
+                >
+                  Leer más <span className="text-xs group-hover:translate-x-1 transition-transform">›</span>
                 </button>
               </div>
             ))}

@@ -51,6 +51,10 @@ import Outsourcing from './components/Outsourcing/Outsourcing';
 //ChatBox
 import ChatBot from './Funcionalidad/ChatBox/ChatBot';
 
+//Desarrollo
+
+import Desarrollo from './components/Desarrollo/Desarrollo';
+
 
 
 
@@ -149,6 +153,9 @@ function App() {
         )}
   {view === 'Outsourcing' && (
         <Outsourcing />
+        )}
+          {view === 'Desarrollo' && (
+        <Desarrollo />
         )}
         
       <ContactForm />

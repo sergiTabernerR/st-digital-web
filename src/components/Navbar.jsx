@@ -7,7 +7,7 @@ const Navbar = ({ setView }) => {
   const navLinks = [
     { 
       name: 'Desarrollo', 
-      view: 'desarrollo_general', // Añadí una vista base por si acaso
+      view: 'Desarrollo',
       submenu: [
         { 
           name: 'Soluciones Empresariales', 
